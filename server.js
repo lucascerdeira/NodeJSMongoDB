@@ -9,4 +9,5 @@ const port = process.env.PORT || 3000;
 // research arrow function
 app.listen(port, () => {
     console.log(`Servidor escutando em http://localhost:${port}`);
+    
 });
