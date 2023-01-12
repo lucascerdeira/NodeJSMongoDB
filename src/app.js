@@ -1,16 +1,29 @@
 import express from "express";
+import db from "./config/dbConnect.js";
+import livros from "./models/livro.js";
+
+
+// metodo para saber oq estara acontecendo / vamos fazer um link entre o terminal 
+db.on("error", console.log.bind(console, 'Erro de conxão'));
+
+// abrir a conexão
+db.once("open", () => {
+    console.log('Conexão feita com sucesso');
+
+});
+
 
 const app = express();
 
 // para ententer que iremos usar dados json 
 app.use(express.json());
 
-// array lista de books
+/* array lista de books
 const books = [
     {id: 1, "titulo": "Senhor dos Aneis"},
     {id: 2, "titulo": "O poder do Habito"},
     {id: 3, "titulo": "O lobo de Wallstreet"}
-]
+] */
 
 app.get('/', (req, res) => { 
     res.status(200).send('Curso de Node.JS');
@@ -18,7 +31,11 @@ app.get('/', (req, res) => {
 
 // 
 app.get('/books', (req, res) => {
-    res.status(200).json(books);
+
+    livros.find((error, livros) => {
+        res.status(200).json(livros);
+    })
+
     
 });
 
